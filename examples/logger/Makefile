@@ -18,4 +18,4 @@ clean:
 .c.o:
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
-main.o: logger/inline.h
+main.o: logger/inline.h logger/macro.h
