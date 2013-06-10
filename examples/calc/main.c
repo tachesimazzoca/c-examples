@@ -65,7 +65,6 @@ int safe_realloc(long* vals, size_t size)
 {
     long* tmp = realloc(vals, size);
     if (tmp == NULL) {
-        free(vals);
         return 0;
     }
     vals = tmp;
