@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 #define FREE(ptr) if (ptr != NULL) { free(ptr); ptr = NULL; }
 
-#define MAX_OPERANDS 32
+#define MAX_OPERANDS 128
 
-int safe_realloc(long* vals, size_t size);
+void* safe_realloc(void* ptr, size_t size);
 long sum_vals(long* vals, size_t num_vals);
 float avg_vals(long* vals, size_t num_vals);
 
@@ -25,7 +26,8 @@ int main(void)
                 goto max_operands_error;
             }
             max_vals *= 2;
-            if (!safe_realloc(vals, sizeof(long) * max_vals)) {
+            vals = safe_realloc(vals, sizeof(long) * max_vals);
+            if (vals == NULL) {
                 goto realloc_error;
             }
         }
@@ -36,10 +38,11 @@ int main(void)
         sscanf(buf, "%ld", &val);
         vals[num_vals] = val;
         num_vals++;
-        printf("num_vals:%d max_vals:%d\n", num_vals, max_vals);
+        printf("vals:%p num_vals:%d max_vals:%d\n", vals, num_vals, max_vals);
     }
     max_vals = num_vals;
-    if (!safe_realloc(vals, sizeof(long) * max_vals)) {
+    vals = safe_realloc(vals, sizeof(long) * max_vals);
+    if (vals == NULL) {
         goto realloc_error;
     }
     printf("sum:%ld avg:%0.2f\n",
@@ -61,14 +64,13 @@ error:
     exit(EXIT_FAILURE);
 }
 
-int safe_realloc(long* vals, size_t size)
+void* safe_realloc(void* ptr, size_t size)
 {
-    long* tmp = realloc(vals, size);
+    void* tmp = realloc(ptr, size);
     if (tmp == NULL) {
-        return 0;
+        FREE(ptr);
     }
-    vals = tmp;
-    return 1;
+    return tmp;
 }
 
 long sum_vals(long* vals, size_t num_vals)
