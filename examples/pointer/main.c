@@ -95,4 +95,6 @@ int main(void)
             printf("(people + %d)->age  %p %d\n", i, &((people + i)->age), (people + i)->age);
         }
     }
+
+    return 0;
 }
