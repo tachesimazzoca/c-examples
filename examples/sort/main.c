@@ -72,7 +72,7 @@ usage:
 malloc_error:
     fprintf(stderr, "Error: malloc error.\n");
     ARRAY_FREE(vals, num_vals);
-    return 1;
+    exit(EXIT_FAILURE);
 }
 
 int compare_as_int(const void* a, const void* b)
