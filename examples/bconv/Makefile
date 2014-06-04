@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS =
 LDFLAGS =
 INCLUDES =
-LIBS = -lm
+LIBS =
 OBJS = main.o
 
 TARGET = example-bconv

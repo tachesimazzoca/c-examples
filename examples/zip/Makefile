@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS =
 LDFLAGS =
 INCLUDES =
-LIBS = -lm -lz
+LIBS = -lz
 OBJS = main.o
 
 TARGET = example-zip
